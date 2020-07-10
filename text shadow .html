@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable="">ITS LIT !🔥</h1>
+  </div>
+
+  <style>
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgb(255, 14, 14);
+    font-size: 100px;
+  }
+  </style>
+
+
+
+<script>
+
+const hero = document.querySelector('.hero');
+const text = document.querySelector('h1');
+
+
+function shadow(e) {
+  //or ES6  // const { offsetWidth: width, offsetHeight: height } = hero;
+  const width = hero.offsetWidth;
+  const height = hero.offsetHeight;
+
+  const walk = 100; //100px
+
+  //for cursor position
+  let { offsetX: x, offsetY: y } = e; 
+
+  //dealing with nested elements 
+  if (this !== e.target) { 
+     // adding nested values to heros values
+    x = x + e.target.offsetLeft;
+    y = y + e.target.offsetTop;
+  }
+
+  // range from 50 to -50
+  const xwalk = Math.round((x / width * walk) - (walk / 2));
+  const ywalk = Math.round((y / height * walk) - (walk / 2));
+
+  //4 diff text shadows
+  text.style.textShadow = `
+    ${xwalk * -1}px ${ywalk * -1}px 0 rgba(255, 0, 255, 0.7),
+    ${xwalk}px ${ywalk}px 0 rgba( 0, 255, 255, 0.7),
+    ${xwalk}px ${ywalk * -1}px 0 rgba(255, 14, 14, 0.7),
+    ${xwalk * -1}px ${ywalk}px 0 rgba( 0, 0, 255, 0.7)
+    `;
+}
+
+//mousemove event listener on hero
+hero.addEventListener('mousemove', shadow); 
+</script>
+
+
+
+</body>
+</html>
